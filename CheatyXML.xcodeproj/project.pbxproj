@@ -10,6 +10,7 @@
 		486D48811AB4A19D004F6258 /* CheatyXML.h in Headers */ = {isa = PBXBuildFile; fileRef = 486D48801AB4A19D004F6258 /* CheatyXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		486D48871AB4A19D004F6258 /* CheatyXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486D487B1AB4A19D004F6258 /* CheatyXML.framework */; };
 		486D488E1AB4A19D004F6258 /* CheatyXMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486D488D1AB4A19D004F6258 /* CheatyXMLTests.swift */; };
+		486D48981AB4A1AF004F6258 /* CheatyXML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486D48971AB4A1AF004F6258 /* CheatyXML.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,8 @@
 		486D48861AB4A19D004F6258 /* CheatyXMLTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CheatyXMLTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		486D488C1AB4A19D004F6258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		486D488D1AB4A19D004F6258 /* CheatyXMLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatyXMLTests.swift; sourceTree = "<group>"; };
+		486D48971AB4A1AF004F6258 /* CheatyXML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheatyXML.swift; sourceTree = "<group>"; };
+		48F5B5041AB4ADAB00E68B10 /* Test.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Test.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +56,7 @@
 		486D48711AB4A19D004F6258 = {
 			isa = PBXGroup;
 			children = (
+				48F5B5041AB4ADAB00E68B10 /* Test.playground */,
 				486D487D1AB4A19D004F6258 /* CheatyXML */,
 				486D488A1AB4A19D004F6258 /* CheatyXMLTests */,
 				486D487C1AB4A19D004F6258 /* Products */,
@@ -72,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				486D48801AB4A19D004F6258 /* CheatyXML.h */,
+				486D48971AB4A1AF004F6258 /* CheatyXML.swift */,
 				486D487E1AB4A19D004F6258 /* Supporting Files */,
 			);
 			path = CheatyXML;
@@ -209,6 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				486D48981AB4A1AF004F6258 /* CheatyXML.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,27 +325,32 @@
 		486D48921AB4A19D004F6258 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = CheatyXML/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		486D48931AB4A19D004F6258 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = CheatyXML/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -395,6 +406,7 @@
 				486D48931AB4A19D004F6258 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		486D48941AB4A19D004F6258 /* Build configuration list for PBXNativeTarget "CheatyXMLTests" */ = {
 			isa = XCConfigurationList;
@@ -403,6 +415,7 @@
 				486D48961AB4A19D004F6258 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
