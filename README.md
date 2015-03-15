@@ -2,7 +2,7 @@
 CheatyXML is a Swift framework designed to manage XML easily.
 
 ## Installation
-To install this, simply add the .xcodeproj to your project, and do not forget to link the .framework.
+To install this, simply add the **.xcodeproj** to your project, and do not forget to link the **.framework**.
 
 Whenever you want to use it in your code, simply type :
 ```swift
@@ -23,6 +23,9 @@ Let's take the following XML content for all of our examples :
     <article>
         <title>My first article</title>
         <description>This is the first article</description>
+        <infos>
+            <date>2015-03-15 15:42:42</date>
+        </infos>
         ...
     </article>
     <article>
@@ -52,7 +55,8 @@ Suppose we want to retrieve the blog `name` of our example :
 let blogName: String! = parser["name"].stringValue // Returns a String
 let blogName: String? = parser["name"].string // Returns an optional String
 ```
-> You never have to worry about the root element, but if you want to clarify your code, you can add it like this :
+> ###### Note
+> You don't have to worry about the root element, but if you want to clarify your code, you can add `rootElement` :
 ```swift
 let element = parser.rootElement["name"] // is the same as the notation seen before
 ```
@@ -64,7 +68,7 @@ let blogAdmin: String! = parser["users"]["admin"].stringValue
 println(blogAdmin) // lobodart
 ```
 --
-### Retrieving elements in a list
+### Working with multiple elements
 Now let's take a look at the `article` element. Our `blog` element contains a couple of articles.
 #### Get an element using its index
 If we want to get the title of the first article, we can do it like this :
@@ -74,7 +78,7 @@ let firstArticleTitle: String! = parser["article"][0]["title"].stringValue
 ```
 Both notation have the same effect. Choose the one you like most.
 #### Browse children of an element
-To iterate over **all** children of an element, just use the classic `for in` syntax like this :
+To iterate over **all** children of an element, just use the `for in` classic syntax :
 ```swift
 for element in parser.rootElement {
     println(element.tagName)
@@ -108,14 +112,29 @@ If you want to get the total number of child elements contained in an element, y
 let numberOfElements: Int = parser["users"].numberOfChildElements
 println(numberOfElements) // 4
 ```
-Note that this code count **all** the child elements contained in `users`. Now suppose we want to get the number of moderators **only**. There are 2 different syntaxes. Once again, choose your favorite one :
+Note that this code counts **all** child elements contained in `users`. Now suppose we want to get the number of moderators **only**. There are 2 different syntaxes. Once again, choose your favorite one :
 ```swift
 let numberOfElements: Int = parser["users"]["moderator"].count
 let numberOfElements: Int = parser["users"].elementsNamed("moderator").count
 ```
 --
+### Missing tags
+Until now, we always retrieved existing tags but what would happen if a tag doesn't exist ? Fortunaly for us, CheatyXML manages this case. Let's take an example :
+```swift
+let articleDate: String! = parser["article", 0]["infos"]["date"].stringValue
+println(articleDate) // 2015-03-15 15:42:42
+let articleDateFail: String! = parser["articles", 0]["infos"]["date"].string // I intentionally add an 's' to 'article'
+println(articleDateFail) // nil
+```
+> ###### Note
+If you have doubts on your chain, keep in mind that using `.string` is safer than using `.stringValue`. In the previous example, using `.stringValue` on `articleDateFail` will result in your application to crash.
+
+
+In sum, you can make mistakes without worrying about your application crash as long as you don't use `.stringValue`.
+
+--
 ### Attributes
-With CheatyXML, get any attribute is very simple.
+With CheatyXML, getting any attribute is very simple.
 ```swift
 let blogVersion = parser.rootElement.attributes["version"]
 ```
