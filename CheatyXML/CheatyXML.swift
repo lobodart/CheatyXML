@@ -42,7 +42,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         private var _attributes: [NSObject: AnyObject]!
         private var _generatorIndex: Int = 0
         
-        override public var debugDescription: String { get { return self.description() } }
+        //override public var debugDescription: String { get { return self.description() } }
         
         public var stringValue: String! {
             get { return self._content! }
@@ -56,9 +56,10 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
             self.tagName = tagName
         }
         
-        public func description() -> String {
+        // Problem with Swift 1.2
+        /*public func description() -> String {
             return "XMLElement <\(self.tagName)>, attributes(\(self.attributes?.count ?? 0)): \(self.attributes), children: \(self._subElements?.count ?? 0)"
-        }
+        }*/
         
         public func generate() -> XMLElement {
             self._generatorIndex = 0
@@ -126,9 +127,10 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         
         init() { super.init(tagName: nil) }
         
-        public override func description() -> String {
+        // Problem with Swift 1.2
+        /*public override func description() -> String {
             return "XMLNullElement"
-        }
+        }*/
         
         public override subscript(tagName: String) -> XMLElement! {
             get { return XMLNullElement() }
@@ -154,20 +156,22 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
     private var _rootElement: XMLElement!
     
     public init?(contentsOfURL: NSURL) {
-        super.init()
         self._xmlParser = NSXMLParser(contentsOfURL: contentsOfURL)
+        
+        super.init()
         if !self.initXMLParser() {
             return nil
         }
     }
     
     public init?(data: NSData!) {
+        self._xmlParser = data != nil ? NSXMLParser(data: data) : nil
+        
         super.init()
-        if data == nil {
+        if self._xmlParser == nil {
             return nil
         }
         
-        self._xmlParser = NSXMLParser(data: data)
         if !self.initXMLParser() {
             return nil
         }
@@ -186,7 +190,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         return self._xmlParser.parse()
     }
     
-    public final func parser(parser: NSXMLParser!, didStartElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!, attributes attributeDict: [NSObject : AnyObject]!) {
+    public final func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [NSObject : AnyObject]) {
         
         var newElement: XMLElement = XMLElement(tagName: elementName)
         if self._rootElement == nil {
@@ -211,17 +215,17 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         self._pointerTree.append(cps)
     }
     
-    public final func parser(parser: NSXMLParser!, didEndElement elementName: String!, namespaceURI: String!, qualifiedName qName: String!) {
+    public final func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         self._pointerTree.removeLast()
     }
     
-    public final func parser(parser: NSXMLParser!, foundCharacters string: String!) {
+    public final func parser(parser: NSXMLParser, foundCharacters string: String?) {
         let nps = UnsafeMutablePointer<XMLElement>(self._pointerTree.last!)
         var tmpString: String! = nps.memory._content ?? ""
-        tmpString! += string
+        tmpString! += string!
         
         let regex: NSRegularExpression = NSRegularExpression(pattern: "[^\\n\\s]+", options: nil, error: nil)!
-        if regex.matchesInString(tmpString, options: nil, range: NSMakeRange(0, countElements(tmpString))).count <= 0 {
+        if regex.matchesInString(tmpString, options: nil, range: NSMakeRange(0, count(tmpString))).count <= 0 {
             tmpString = nil
         }
         
