@@ -190,9 +190,9 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         return self._xmlParser.parse()
     }
     
-    public final func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [NSObject : AnyObject]) {
+    public final func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
-        var newElement: XMLElement = XMLElement(tagName: elementName)
+        let newElement: XMLElement = XMLElement(tagName: elementName)
         if self._rootElement == nil {
             self._rootElement = newElement
         }
@@ -224,8 +224,8 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         var tmpString: String! = nps.memory._content ?? ""
         tmpString! += string!
         
-        let regex: NSRegularExpression = NSRegularExpression(pattern: "[^\\n\\s]+", options: nil, error: nil)!
-        if regex.matchesInString(tmpString, options: nil, range: NSMakeRange(0, count(tmpString))).count <= 0 {
+        let regex: NSRegularExpression = try! NSRegularExpression(pattern: "[^\\n\\s]+", options: [])
+        if regex.matchesInString(tmpString, options: [], range: NSMakeRange(0, tmpString.characters.count)).count <= 0 {
             tmpString = nil
         }
         
