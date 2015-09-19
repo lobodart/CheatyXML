@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CheatyXML"
-  s.version      = "1.1"
+  s.version      = "1.2"
   s.summary      = "CheatyXML"
 
   s.description  = <<-DESC
@@ -34,8 +34,8 @@ Pod::Spec.new do |s|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  # s.license      = "MIT (example)"
-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  s.license      = "MIT"
+  s.license      = { :type => "MIT", :file => "LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -66,7 +66,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/lobodart/CheatyXML.git", :tag => "v1.1" }
+  s.source       = { :git => "https://github.com/lobodart/CheatyXML.git", :tag => "v1.2" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
