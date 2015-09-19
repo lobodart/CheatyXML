@@ -219,10 +219,10 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         self._pointerTree.removeLast()
     }
     
-    public final func parser(parser: NSXMLParser, foundCharacters string: String?) {
+    public final func parser(parser: NSXMLParser, foundCharacters string: String) {
         let nps = UnsafeMutablePointer<XMLElement>(self._pointerTree.last!)
         var tmpString: String! = nps.memory._content ?? ""
-        tmpString! += string!
+        tmpString! += string
         
         let regex: NSRegularExpression = try! NSRegularExpression(pattern: "[^\\n\\s]+", options: [])
         if regex.matchesInString(tmpString, options: [], range: NSMakeRange(0, tmpString.characters.count)).count <= 0 {
