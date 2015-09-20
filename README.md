@@ -4,6 +4,8 @@ CheatyXML is a Swift framework designed to manage XML easily.
 ## Installation
 To install this, simply add the **.xcodeproj** to your project, and do not forget to link the **.framework**.
 
+If you're using **cocoapods**, just add `pod 'CheatyXML'` into your `Podfile` file.
+
 Whenever you want to use it in your code, simply type :
 ```swift
 import CheatyXML
