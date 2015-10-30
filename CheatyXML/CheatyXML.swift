@@ -13,7 +13,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
     public class XMLElement: NSObject, SequenceType, GeneratorType {
 
         public let tagName: String?
-        public let attributes: [NSObject: AnyObject]
+        public let attributes: [String: String]
 
         public var count: Int {
             get {
@@ -46,7 +46,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
             get { return self._content }
         }
 
-        init(tagName: String?, attributes: [NSObject: AnyObject]) {
+        init(tagName: String?, attributes: [String: String]) {
             self.tagName = tagName
             self.attributes = attributes
         }
