@@ -67,7 +67,7 @@ let element = parser.rootElement["name"] // is the same as the notation seen bef
 If you want to access to deeper elements like `admin` for example, just chain :
 ```swift
 let blogAdmin: String! = parser["users"]["admin"].stringValue
-println(blogAdmin) // lobodart
+print(blogAdmin) // lobodart
 ```
 --
 ### Working with multiple elements
@@ -83,7 +83,7 @@ Both notation have the same effect. Choose the one you like most.
 To iterate over **all** children of an element, just use the `for in` classic syntax :
 ```swift
 for element in parser.rootElement {
-    println(element.tagName)
+    print(element.tagName)
 }
 ```
 This code will give us :
@@ -97,7 +97,7 @@ article
 Now, to iterate over **specific** children of an element, the code is almost the same :
 ```swift
 for element in parser.rootElement.elementsNamed("article") {
-    println(element.tagName)
+    print(element.tagName)
 }
 ```
 This time, it will give us :
@@ -112,7 +112,7 @@ If you want to get the total number of child elements contained in an element, y
 ```swift
 // Suppose we have 3 moderators in our example
 let numberOfElements: Int = parser["users"].numberOfChildElements
-println(numberOfElements) // 4
+print(numberOfElements) // 4
 ```
 Note that this code counts **all** child elements contained in `users`. Now suppose we want to get the number of moderators **only**. There are 2 different syntaxes. Once again, choose your favorite one :
 ```swift
@@ -124,9 +124,9 @@ let numberOfElements: Int = parser["users"].elementsNamed("moderator").count
 Until now, we always retrieved existing tags but what would happen if a tag doesn't exist ? Fortunaly for us, CheatyXML manages this case. Let's take an example :
 ```swift
 let articleDate: String! = parser["article", 0]["infos"]["date"].stringValue
-println(articleDate) // 2015-03-15 15:42:42
+print(articleDate) // 2015-03-15 15:42:42
 let articleDateFail: String! = parser["articles", 0]["infos"]["date"].string // I intentionally add an 's' to 'article'
-println(articleDateFail) // nil
+print(articleDateFail) // nil
 ```
 > ###### Note
 If you have doubts on your chain, keep in mind that using `.string` is safer than using `.stringValue`. In the previous example, using `.stringValue` on `articleDateFail` will result in your application to crash.
