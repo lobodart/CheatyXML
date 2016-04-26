@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2F50476B-C33B-4B0E-8BCA-763A4B422BA9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>3F4DDE99D53BFFA66E50FFB6AAFA303FD81D596A</key>
+		<string>github.com:lobodart/CheatyXML.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>CheatyXML.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>3F4DDE99D53BFFA66E50FFB6AAFA303FD81D596A</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:lobodart/CheatyXML.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>3F4DDE99D53BFFA66E50FFB6AAFA303FD81D596A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>3F4DDE99D53BFFA66E50FFB6AAFA303FD81D596A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>CheatyXML</string>
+		</dict>
+	</array>
+</dict>
+</plist>

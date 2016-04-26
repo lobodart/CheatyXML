@@ -11,6 +11,7 @@
 		486D48871AB4A19D004F6258 /* CheatyXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486D487B1AB4A19D004F6258 /* CheatyXML.framework */; };
 		486D488E1AB4A19D004F6258 /* CheatyXMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486D488D1AB4A19D004F6258 /* CheatyXMLTests.swift */; };
 		486D48981AB4A1AF004F6258 /* CheatyXML.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486D48971AB4A1AF004F6258 /* CheatyXML.swift */; };
+		48CD10F61CCFEAD800A8CFAD /* Test.xml in Resources */ = {isa = PBXBuildFile; fileRef = 48CD10F51CCFEAD800A8CFAD /* Test.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +32,7 @@
 		486D488C1AB4A19D004F6258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		486D488D1AB4A19D004F6258 /* CheatyXMLTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheatyXMLTests.swift; sourceTree = "<group>"; };
 		486D48971AB4A1AF004F6258 /* CheatyXML.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheatyXML.swift; sourceTree = "<group>"; };
+		48CD10F51CCFEAD800A8CFAD /* Test.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Test.xml; sourceTree = "<group>"; };
 		48F5B5041AB4ADAB00E68B10 /* Test.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Test.playground; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				486D488D1AB4A19D004F6258 /* CheatyXMLTests.swift */,
+				48CD10F51CCFEAD800A8CFAD /* Test.xml */,
 				486D488B1AB4A19D004F6258 /* Supporting Files */,
 			);
 			path = CheatyXMLTests;
@@ -206,6 +209,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48CD10F61CCFEAD800A8CFAD /* Test.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
