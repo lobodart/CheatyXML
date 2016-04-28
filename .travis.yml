@@ -2,4 +2,4 @@ language: objective-c
 
 xcode_project: CheatyXML.xcodeproj
 
-xcode_scheme: CheatyXMLTests
+xcode_scheme: CheatyXML
