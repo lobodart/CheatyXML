@@ -1,4 +1,7 @@
 # CheatyXML
+
+[![Build Status](https://travis-ci.org/lobodart/CheatyXML.svg?branch=master)](https://travis-ci.org/lobodart/CheatyXML)
+
 CheatyXML is a Swift framework designed to manage XML easily.
 
 ## Installation
