@@ -182,6 +182,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
     private let _xmlParser: NSXMLParser!
     private var _pointerTree: [COpaquePointer]!
     private var _rootElement: XMLElement!
+    private var _allocatedPointersList: [UnsafeMutablePointer<XMLElement>] = []
     
     public init?(contentsOfURL: NSURL) {
         self._xmlParser = NSXMLParser(contentsOfURL: contentsOfURL)
@@ -207,6 +208,12 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
     
     public convenience init?(string: String) {
         self.init(data: NSString(string: string).dataUsingEncoding(NSUTF8StringEncoding))
+    }
+    
+    deinit {
+        for pointer in self._allocatedPointersList {
+            pointer.dealloc(1)
+        }
     }
     
     private func initXMLParser() -> Bool {
@@ -239,6 +246,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
     
         let ps = UnsafeMutablePointer<XMLElement>.alloc(1)
         ps.initialize(newElement)
+        self._allocatedPointersList.append(ps)
         let cps = COpaquePointer(ps)
         self._pointerTree.append(cps)
     }
