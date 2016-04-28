@@ -1,5 +1,6 @@
 language: objective-c
 
-xcode_project: CheatyXML.xcodeproj
+xcode_sdk: iphonesimulator
 
-xcode_scheme: CheatyXMLTests
+script:
+- xcodebuild -project CheatyXML.xcodeproj -scheme "CheatyXML" -destination "platform=iOS Simulator,name=iPhone 6" test
