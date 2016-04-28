@@ -13,7 +13,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
     public class XMLElement: NSObject, SequenceType, GeneratorType {
         
         public let tagName: String!
-        public var attributes: [NSObject: AnyObject]! {
+        public var attributes: [NSObject: AnyObject] {
             get {
                 return self._attributes
             }
@@ -21,7 +21,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         
         public var count: Int {
             get {
-                if self._parentElement == nil {
+                guard let _ = self._parentElement else {
                     return 1
                 }
                 
@@ -32,24 +32,56 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         
         public var numberOfChildElements: Int {
             get {
-                return self._subElements?.count ?? 0
+                return self._subElements.count
             }
         }
         
-        private var _subElements: [XMLElement]!
+        private var _subElements: [XMLElement] = []
         private var _content: String?
         private var _parentElement: XMLElement!
-        private var _attributes: [NSObject: AnyObject]!
+        private var _attributes: [NSObject: AnyObject] = [:]
         private var _generatorIndex: Int = 0
         
         //override public var debugDescription: String { get { return self.description() } }
         
-        public var stringValue: String! {
-            get { return self._content! }
+        private var _numberContent: NSNumber? {
+            get {
+                guard let content = self._content else {
+                    return nil
+                }
+                
+                let formatter: NSNumberFormatter = NSNumberFormatter()
+                formatter.numberStyle = .DecimalStyle
+                return formatter.numberFromString(content)
+            }
         }
         
-        public var string: String? {
-            get { return self._content }
+        public var exists: Bool { get { return !(self is XMLNullElement) } }
+        
+        public var string: String? { get { return self._content } }
+        public var stringValue: String { get { return self.string! } }
+        public var int: Int? { get { return self._numberContent?.integerValue } }
+        public var intValue: Int { get { return self.int! } }
+        public var float: Float? { get { return self._numberContent?.floatValue } }
+        public var floatValue: Float { get { return self.float! } }
+        public var double: Double? { get { return self._numberContent?.doubleValue } }
+        public var doubleValue: Double { get { return self.double! } }
+        public var number: NSNumber? { get { return self._numberContent } }
+        public var numberValue: NSNumber { get { return self.number! } }
+        public var array: [XMLElement] { get { return self._parentElement?.arrayOfElementsNamed(self.tagName) ?? self._subElements } }
+        
+        public func date(format: String) -> NSDate? {
+            guard let content = self._content else {
+                return nil
+            }
+            
+            let dateFormat = NSDateFormatter()
+            dateFormat.dateFormat = format
+            return dateFormat.dateFromString(content)
+        }
+        
+        public func dateValue(format: String) -> NSDate {
+            return self.date(format)!
         }
         
         init(tagName: String!) {
@@ -78,17 +110,13 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
             return self.arrayOfElementsNamed(name)
         }
         
-        private final func arrayOfElementsNamed(tagName: String) -> [XMLElement]! {
+        private final func arrayOfElementsNamed(tagName: String) -> [XMLElement] {
             return self._subElements.filter({(element: XMLElement) -> Bool in
                 return element.tagName == tagName
             })
         }
         
         private final func addSubElement(subElement: XMLElement) {
-            if self._subElements == nil {
-                self._subElements = []
-            }
-            
             self._subElements.append(subElement)
         }
         
@@ -182,7 +210,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
     }
     
     private func initXMLParser() -> Bool {
-        if self._xmlParser == nil {
+        guard let _ = self._xmlParser else {
             return false
         }
         

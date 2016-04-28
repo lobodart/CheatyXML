@@ -18,7 +18,9 @@ class CheatyXMLTests: XCTestCase {
         super.setUp()
         
         self.filePath = NSBundle(forClass: self.dynamicType).pathForResource("Test", ofType: "xml")
-        XCTAssert(self.filePath != nil, "Cannot open file Test.xml")
+        XCTAssert(self.filePath != nil)
+        
+        self.continueAfterFailure = false
     }
     
     override func tearDown() {
@@ -29,20 +31,20 @@ class CheatyXMLTests: XCTestCase {
     func testConstructor() {
         let url: NSURL = NSURL(fileURLWithPath: self.filePath)
         let urlParser: XMLParser! = XMLParser(contentsOfURL: url)
-        XCTAssert(urlParser != nil, "XMLParser constructor with URL failed.")
+        XCTAssert(urlParser != nil)
         
         do {
             let content: String = try String(contentsOfFile: self.filePath)
             let stringParser: XMLParser! = XMLParser(string: content)
-            XCTAssert(stringParser != nil, "XMLParser constructor with String failed.")
+            XCTAssert(stringParser != nil)
             
             let data: NSData! = NSData(contentsOfURL: url)
-            XCTAssert(data != nil, "Cannot create NSData from file.")
+            XCTAssert(data != nil)
             
             let dataParser: XMLParser! = XMLParser(data: data)
-            XCTAssert(dataParser != nil, "XMLParser constructor with NSData failed.")
+            XCTAssert(dataParser != nil)
         } catch {
-            XCTAssert(false, "Cannot open content of file.")
+            XCTAssert(false)
         }
     }
     
@@ -51,6 +53,39 @@ class CheatyXMLTests: XCTestCase {
         let parser: XMLParser = XMLParser(contentsOfURL: url)!
         
         let blogName: String! = parser["name"].stringValue
-        XCTAssert(blogName == "MyAwesomeBlog!", "Cannot retrieve blogName.")
+        XCTAssert(blogName == "MyAwesomeBlog!")
+        
+        let admin: String! = parser["users"]["admin"].stringValue
+        XCTAssert(admin == "lobodart")
+        
+        let article: String! = parser["article"][0]["title"].stringValue
+        XCTAssert(article == "My first article")
+        
+        let article2: String! = parser["article"][1]["title"].stringValue
+        XCTAssert(article2 == "Another article")
+        
+        let articleOtherNotation: String! = parser["article", 0]["title"].stringValue
+        XCTAssert(articleOtherNotation == "My first article")
+        
+        let article2OtherNotation: String! = parser["article", 1]["title"].stringValue
+        XCTAssert(article2OtherNotation == "Another article")
+    }
+    
+    func testTypeCasts() {
+        let url: NSURL = NSURL(fileURLWithPath: self.filePath)
+        let parser: XMLParser = XMLParser(contentsOfURL: url)!
+        
+        let articles = parser["article"].array
+        XCTAssert(articles.count == 2)
+        
+        let article = articles[0]
+        
+        XCTAssert(article["title"].stringValue == "My first article")
+        XCTAssert(article["read"].intValue == 324)
+        XCTAssert(article["rate"].floatValue == 4.3)
+        XCTAssert(article["rate"].doubleValue == 4.3)
+        XCTAssert(article["date"].date("yyyy-MM-dd HH:mm:ss") != nil)
+        XCTAssert(article["title"].exists == true)
+        XCTAssert(article["foobar"].exists == false)
     }
 }
