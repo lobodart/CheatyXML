@@ -13,12 +13,16 @@ import CheatyXML
 class CheatyXMLTests: XCTestCase {
     
     var filePath: String!
+    var failFilePath: String!
     
     override func setUp() {
         super.setUp()
         
         self.filePath = NSBundle(forClass: self.dynamicType).pathForResource("Test", ofType: "xml")
         XCTAssert(self.filePath != nil)
+        
+        self.failFilePath = NSBundle(forClass: self.dynamicType).pathForResource("TestFail", ofType: "xml")
+        XCTAssert(self.failFilePath != nil)
         
         self.continueAfterFailure = false
     }
@@ -29,6 +33,9 @@ class CheatyXMLTests: XCTestCase {
     }
     
     func testConstructor() {
+        let failParser: XMLParser? = XMLParser(contentsOfURL: NSURL(fileURLWithPath: self.failFilePath))
+        XCTAssert(failParser == nil)
+        
         let url: NSURL = NSURL(fileURLWithPath: self.filePath)
         let urlParser: XMLParser! = XMLParser(contentsOfURL: url)
         XCTAssert(urlParser != nil)
@@ -84,8 +91,28 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(article["read"].intValue == 324)
         XCTAssert(article["rate"].floatValue == 4.3)
         XCTAssert(article["rate"].doubleValue == 4.3)
-        XCTAssert(article["date"].date("yyyy-MM-dd HH:mm:ss") != nil)
+        XCTAssert(article["date"].dateValue("yyyy-MM-dd HH:mm:ss").isKindOfClass(NSDate))
         XCTAssert(article["title"].exists == true)
-        XCTAssert(article["foobar"].exists == false)
+        
+        
+        XCTAssert(article["foo"].string == nil)
+        XCTAssert(article["bar"].int == nil)
+        XCTAssert(article["john"].float == nil)
+        XCTAssert(article["doe"].double == nil)
+        XCTAssert(article["date"].date("failFormat") == nil)
+        XCTAssert(article["failDate"].date("yyyy-MM-dd HH:mm:ss") == nil)
+        XCTAssert(article["42"].exists == false)
+    }
+    
+    func testAttributeRetrieving() {
+        let url: NSURL = NSURL(fileURLWithPath: self.filePath)
+        let parser: XMLParser = XMLParser(contentsOfURL: url)!
+        
+        XCTAssert(parser.rootElement.attributes.count == 2)
+        XCTAssert(parser.rootElement.attribute("version").stringValue == "1.0")
+        XCTAssert(parser.rootElement.attribute("version").intValue == 1)
+        XCTAssert(parser.rootElement.attribute("version").doubleValue == 1.0)
+        XCTAssert(parser.rootElement.attribute("version").floatValue == 1.0)
+        XCTAssert(parser.rootElement.attribute("creator").stringValue == "lobodart")
     }
 }

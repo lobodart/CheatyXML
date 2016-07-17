@@ -10,6 +10,8 @@
         <date>2015-03-15 15:42:42</date>
         <read>324</read>
         <rate>4.3</rate>
+        <is_online>true</is_online>
+        <is_draft>false</is_draft>
     </article>
     <article>
         <title>Another article</title>
