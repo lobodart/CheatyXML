@@ -1,5 +1,6 @@
 # CheatyXML
 
+[![CocoaPods](https://img.shields.io/cocoapods/v/CheatyXML.svg?maxAge=2592000)](https://cocoapods.org/pods/CheatyXML)
 [![Build Status](https://travis-ci.org/lobodart/CheatyXML.svg?branch=master)](https://travis-ci.org/lobodart/CheatyXML)
 [![Coverage Status](https://coveralls.io/repos/github/lobodart/CheatyXML/badge.svg?branch=master)](https://coveralls.io/github/lobodart/CheatyXML?branch=master)
 
@@ -31,6 +32,7 @@ Let's take the following XML content for all of our examples :
         <description>This is the first article</description>
         <infos>
             <date>2015-03-15 15:42:42</date>
+            <rate>42</rate>
         </infos>
         ...
     </article>
@@ -124,6 +126,24 @@ let numberOfElements: Int = parser["users"]["moderator"].count
 let numberOfElements: Int = parser["users"].elementsNamed("moderator").count
 ```
 --
+### Type casting (>= 2.0.0)
+CheatyXML allows you to cast tag/attribute values into some common types. You can get either optional or non-optinal value for your cast.
+```swift
+let firstArticleRate = parser["article", 0]["rate"]
+firstArticleRate.int // Optional(42)
+firstArticleRate.intValue // 42
+firstArticleRate.float // Optional(42.0)
+firstArticleRate.floatValue // 42.0
+```
+If you are not sure about the type, use the optional caster. If you try to cast a value with an inappropriate caster, your app will crash.
+```swift
+let firstArticleTitle = parser["article", 0]["title"]
+firstArticleTitle.string // Optional("My first article")
+firstArticleTitle.stringValue // "My first article"
+firstArticleTitle.int // nil
+firstArticleTitle.intValue // CRASH!
+```
+--
 ### Missing tags
 Until now, we always retrieved existing tags but what would happen if a tag doesn't exist ? Fortunaly for us, CheatyXML manages this case. Let's take an example :
 ```swift
@@ -140,11 +160,41 @@ In sum, you can make mistakes without worrying about your application crash as l
 
 --
 ### Attributes
+#### Get one
 With CheatyXML, getting any attribute is very simple.
+##### >= 2.0.0
+```swift
+let blogVersion = parser.rootElement.attribute("version")
+let adminIsActive = parser["users"]["admin"].attribute("is_active")
+```
+##### Earlier
 ```swift
 let blogVersion = parser.rootElement.attributes["version"]
-```
-Another example using a deeper element :
-```swift
 let adminIsActive = parser["users"]["admin"].attributes["is_active"]
 ```
+As mentionned above, if you are using a version **>= 2.0.0**, you can also use the type casting on attributes.
+```swift
+let blogVersion = parser.rootElement.attribute("version").floatValue // 1.0
+let creator = parser.rootElement.attribute("creator").stringValue // "lobodart"
+```
+> ###### Note
+For more information about the optional/non-optional casting, please read the [Type casting][type-casting] part.
+
+#### Get all
+Once uppon a time, it is very easy to get all the tag attributes.
+##### >= 2.0.0
+```swift
+let attributes = parser.rootElement.attributes // Will give you a [XMLAttribute]
+let dic = attributes.dictionary // Will give you a [String: String]
+```
+##### Earlier
+```swift
+let attributes = parser.rootElement.attributes // Will give you a [String: String]
+```
+
+### TO-DO
+- [ ] Add more Unit Tests
+- [ ] Class mapping
+- [ ] XML Generator
+
+[type-casting]: [type-casting]
