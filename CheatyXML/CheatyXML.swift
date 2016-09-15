@@ -8,16 +8,36 @@
 
 import Foundation
 
-public class XMLParser: NSObject, NSXMLParserDelegate {
+fileprivate func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+        case let (l?, r?):
+            return l < r
+        case (nil, _?):
+            return true
+        default:
+            return false
+    }
+}
 
-    public class XMLElement: NSObject, SequenceType, GeneratorType {
+fileprivate func >= <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
+    switch (lhs, rhs) {
+        case let (l?, r?):
+            return l >= r
+        default:
+            return !(lhs < rhs)
+    }
+}
+
+open class XMLParser: NSObject, XMLParserDelegate {
+
+    open class XMLElement: NSObject, Sequence, IteratorProtocol {
 
         public let tagName: String?
         public let attributes: [String: String]
 
         public var count: Int {
             get {
-                guard let element = self._parentElement, tagName = self.tagName else {
+                guard let element = self._parentElement, let tagName = self.tagName else {
                     return 1
                 }
 
@@ -31,12 +51,12 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
             }
         }
 
-        private var _subElements: [XMLElement]?
-        private var _content: String?
-        private var _parentElement: XMLElement?
-        private var _generatorIndex: Int = 0
+        fileprivate var _subElements: [XMLElement]?
+        fileprivate var _content: String?
+        fileprivate var _parentElement: XMLElement?
+        fileprivate var _generatorIndex: Int = 0
 
-        public override var debugDescription: String { get { return self.description } }
+        open override var debugDescription: String { get { return self.description } }
 
         public var stringValue: String! {
             get { return self._content! }
@@ -51,7 +71,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
             self.attributes = attributes
         }
 
-        public override var description: String {
+        open override var description: String {
             return "XMLElement <\(self.tagName)>, attributes(\(self.attributes.count ?? 0)): \(self.attributes), children: \(self._subElements?.count ?? 0)"
         }
 
@@ -65,20 +85,21 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
                 return nil
             }
 
-            return self._subElements?[self._generatorIndex++]
+            self._generatorIndex += 1
+            return self._subElements?[self._generatorIndex]
         }
 
-        public func elementsNamed(name: String) -> [XMLElement] {
+        public func elementsNamed(_ name: String) -> [XMLElement] {
             return self.arrayOfElementsNamed(name)
         }
 
-        private final func arrayOfElementsNamed(tagName: String) -> [XMLElement] {
+        fileprivate final func arrayOfElementsNamed(_ tagName: String) -> [XMLElement] {
             return self._subElements?.filter({(element: XMLElement) -> Bool in
                 return element.tagName == tagName
             }) ?? Array()
         }
 
-        private final func addSubElement(subElement: XMLElement) {
+        fileprivate final func addSubElement(_ subElement: XMLElement) {
             if self._subElements == nil {
                 self._subElements = []
             }
@@ -94,11 +115,11 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
 
         public subscript(index: Int) -> XMLElement {
             get {
-				if let parentElement = self._parentElement, tagName = self.tagName {
-					return parentElement[tagName, index]
-				} else {
-					return XMLNullElement()
-				}
+                if let parentElement = self._parentElement, let tagName = self.tagName {
+                    return parentElement[tagName, index]
+                } else {
+                    return XMLNullElement()
+                }
             }
         }
 
@@ -142,32 +163,32 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         }
     }
 
-    public private(set) var rootElement: XMLElement?
-    private let _xmlParser: NSXMLParser
-    private var _pointerTree: [COpaquePointer]!
-	private let _regex: NSRegularExpression = try! NSRegularExpression(pattern: "[^\\n\\s]+", options: [])
+    public fileprivate(set) var rootElement: XMLElement?
+    fileprivate let _xmlParser: Foundation.XMLParser
+    fileprivate var _pointerTree: [OpaquePointer]!
+    fileprivate let _regex: NSRegularExpression = try! NSRegularExpression(pattern: "[^\\n\\s]+", options: [])
 
-    public convenience init?(contentsOfURL: NSURL) {
-        guard let xmlParser = NSXMLParser(contentsOfURL: contentsOfURL) else {
+    public convenience init?(contentsOfURL: URL) {
+        guard let xmlParser = Foundation.XMLParser(contentsOf: contentsOfURL) else {
             return nil
         }
 
         self.init(xmlParser: xmlParser)
     }
 
-    public convenience init?(data: NSData?) {
+    public convenience init?(data: Data?) {
         guard let data = data else {
             return nil
         }
 
-        self.init(xmlParser: NSXMLParser(data: data))
+        self.init(xmlParser: Foundation.XMLParser(data: data))
     }
 
     public convenience init?(string: String) {
-        self.init(data: NSString(string: string).dataUsingEncoding(NSUTF8StringEncoding))
+        self.init(data: string.data(using: String.Encoding.utf8))
     }
 
-    private init?(xmlParser: NSXMLParser) {
+    fileprivate init?(xmlParser: Foundation.XMLParser) {
         self._xmlParser = xmlParser
         super.init()
 
@@ -178,7 +199,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
         }
     }
 
-    public final func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+    public final func parser(_ parser: Foundation.XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         let newElement: XMLElement = XMLElement(tagName: elementName, attributes: attributeDict)
         if self.rootElement == nil {
             self.rootElement = newElement
@@ -188,29 +209,29 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
             self._pointerTree = []
         } else {
             let nps = UnsafeMutablePointer<XMLElement>(self._pointerTree.last!)
-            newElement._parentElement = nps.memory
-            nps.memory.addSubElement(newElement)
+            newElement._parentElement = nps.pointee
+            nps.pointee.addSubElement(newElement)
         }
 
-        let ps = UnsafeMutablePointer<XMLElement>.alloc(1)
-        ps.initialize(newElement)
-        let cps = COpaquePointer(ps)
+        let ps = UnsafeMutablePointer<XMLElement>.allocate(capacity: 1)
+        ps.initialize(to: newElement)
+        let cps = OpaquePointer(ps)
         self._pointerTree.append(cps)
     }
 
-    public final func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    public final func parser(_ parser: Foundation.XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         self._pointerTree.removeLast()
     }
 
-    public final func parser(parser: NSXMLParser, foundCharacters string: String) {
+    public final func parser(_ parser: Foundation.XMLParser, foundCharacters string: String) {
         let nps = UnsafeMutablePointer<XMLElement>(self._pointerTree.last!)
-        var tmpString = nps.memory._content ?? ""
+        var tmpString = nps.pointee._content ?? ""
         tmpString += string
 
-        if self._regex.matchesInString(tmpString, options: [], range: NSMakeRange(0, tmpString.characters.count)).count > 0 {
-            nps.memory._content = tmpString
+        if self._regex.matches(in: tmpString, options: [], range: NSMakeRange(0, tmpString.characters.count)).count > 0 {
+            nps.pointee._content = tmpString
         } else {
-            nps.memory._content = nil
+            nps.pointee._content = nil
         }
     }
 
@@ -219,7 +240,7 @@ public class XMLParser: NSObject, NSXMLParserDelegate {
     }
 
     public subscript(tagName: String, index: Int) -> XMLElement {
-		return self.rootElement?[tagName, index] ?? XMLNullElement()
+        return self.rootElement?[tagName, index] ?? XMLNullElement()
     }
 
 }
