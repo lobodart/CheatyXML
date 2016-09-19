@@ -1,5 +1,5 @@
 //
-//  XMLAttribute.swift
+//  CXMLAttribute.swift
 //  CheatyXML
 //
 //  Created by Louis BODART on 16/07/2016.
@@ -8,16 +8,16 @@
 
 import Foundation
 
-public class XMLAttribute: XMLElement {
+open class CXMLAttribute: CXMLElement {
     
-    public let name: String!
+    open let name: String!
     
     init(name: String!, value: String?) {
         self.name = name
         super.init(content: value)
     }
     
-    public override var description: String {
-        return "XMLAttribute"
+    open override var description: String {
+        return "CXMLAttribute"
     }
 }

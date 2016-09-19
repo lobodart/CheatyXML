@@ -1,5 +1,5 @@
 //
-//  XMLNullAttribute.swift
+//  CXMLNullAttribute.swift
 //  CheatyXML
 //
 //  Created by Louis BODART on 17/07/2016.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-// MARK: - XMLNullAttribute Class
-public class XMLNullAttribute: XMLAttribute {
+// MARK: - CXMLNullAttribute Class
+open class CXMLNullAttribute: CXMLAttribute {
     
-    public override var description: String {
-        return "XMLNullAttribute"
+    open override var description: String {
+        return "CXMLNullAttribute"
     }
     
     init() { super.init(name: nil, value: nil) }

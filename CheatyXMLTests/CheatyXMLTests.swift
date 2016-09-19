@@ -18,10 +18,10 @@ class CheatyXMLTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        self.filePath = NSBundle(forClass: self.dynamicType).pathForResource("Test", ofType: "xml")
+        self.filePath = Bundle(for: type(of: self)).path(forResource: "Test", ofType: "xml")
         XCTAssert(self.filePath != nil)
         
-        self.failFilePath = NSBundle(forClass: self.dynamicType).pathForResource("TestFail", ofType: "xml")
+        self.failFilePath = Bundle(for: type(of: self)).path(forResource: "TestFail", ofType: "xml")
         XCTAssert(self.failFilePath != nil)
         
         self.continueAfterFailure = false
@@ -33,22 +33,22 @@ class CheatyXMLTests: XCTestCase {
     }
     
     func testConstructor() {
-        let failParser: XMLParser? = XMLParser(contentsOfURL: NSURL(fileURLWithPath: self.failFilePath))
+        let failParser: CXMLParser? = CXMLParser(contentsOfURL: URL(fileURLWithPath: self.failFilePath))
         XCTAssert(failParser == nil)
         
-        let url: NSURL = NSURL(fileURLWithPath: self.filePath)
-        let urlParser: XMLParser! = XMLParser(contentsOfURL: url)
+        let url: URL = URL(fileURLWithPath: self.filePath)
+        let urlParser: CXMLParser! = CXMLParser(contentsOfURL: url)
         XCTAssert(urlParser != nil)
         
         do {
             let content: String = try String(contentsOfFile: self.filePath)
-            let stringParser: XMLParser! = XMLParser(string: content)
+            let stringParser: CXMLParser! = CXMLParser(string: content)
             XCTAssert(stringParser != nil)
             
-            let data: NSData! = NSData(contentsOfURL: url)
+            let data: Data! = try? Data(contentsOf: url)
             XCTAssert(data != nil)
             
-            let dataParser: XMLParser! = XMLParser(data: data)
+            let dataParser: CheatyXML.XMLParser! = CheatyXML.XMLParser(data: data)
             XCTAssert(dataParser != nil)
         } catch {
             XCTAssert(false)
@@ -56,8 +56,8 @@ class CheatyXMLTests: XCTestCase {
     }
     
     func testTagRetrieving() {
-        let url: NSURL = NSURL(fileURLWithPath: self.filePath)
-        let parser: XMLParser = XMLParser(contentsOfURL: url)!
+        let url: URL = URL(fileURLWithPath: self.filePath)
+        let parser: CXMLParser = CXMLParser(contentsOfURL: url)!
         
         let blogName: String! = parser["name"].stringValue
         XCTAssert(blogName == "MyAwesomeBlog!")
@@ -79,8 +79,8 @@ class CheatyXMLTests: XCTestCase {
     }
     
     func testTypeCasts() {
-        let url: NSURL = NSURL(fileURLWithPath: self.filePath)
-        let parser: XMLParser = XMLParser(contentsOfURL: url)!
+        let url: URL = URL(fileURLWithPath: self.filePath)
+        let parser: CXMLParser = CXMLParser(contentsOfURL: url)!
         
         let articles = parser["article"].array
         XCTAssert(articles.count == 2)
@@ -91,7 +91,7 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(article["read"].intValue == 324)
         XCTAssert(article["rate"].floatValue == 4.3)
         XCTAssert(article["rate"].doubleValue == 4.3)
-        XCTAssert(article["date"].dateValue("yyyy-MM-dd HH:mm:ss").isKindOfClass(NSDate))
+        XCTAssert(article["date"].dateValue("yyyy-MM-dd HH:mm:ss") is Date)
         XCTAssert(article["title"].exists == true)
         
         
@@ -105,8 +105,8 @@ class CheatyXMLTests: XCTestCase {
     }
     
     func testAttributeRetrieving() {
-        let url: NSURL = NSURL(fileURLWithPath: self.filePath)
-        let parser: XMLParser = XMLParser(contentsOfURL: url)!
+        let url: URL = URL(fileURLWithPath: self.filePath)
+        let parser: CXMLParser = CXMLParser(contentsOfURL: url)!
         
         XCTAssert(parser.rootElement.attributes.count == 2)
         XCTAssert(parser.rootElement.attribute("version").stringValue == "1.0")
