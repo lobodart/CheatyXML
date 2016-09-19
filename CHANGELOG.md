@@ -1,4 +1,4 @@
-## 2.0.0 (July 17, 2016)
+## 2.0.0 (September 19, 2016)
 
 - Swift 3 Update
 - Fix small memory leak
