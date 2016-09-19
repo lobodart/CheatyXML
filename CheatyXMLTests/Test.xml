@@ -1,0 +1,22 @@
+<blog version="1.0" creator="lobodart">
+    <name>MyAwesomeBlog!</name>
+    <users>
+        <admin is_active="true">lobodart</admin>
+        <moderator is_active="false">slash705</moderator>
+    </users>
+    <article>
+        <title>My first article</title>
+        <description>This is the first article</description>
+        <date>2015-03-15 15:42:42</date>
+        <read>324</read>
+        <rate>4.3</rate>
+        <is_online>true</is_online>
+        <is_draft>false</is_draft>
+    </article>
+    <article>
+        <title>Another article</title>
+        <description>This is another article</description>
+        <date>2015-04-15 15:42:42</date>
+        <read>42</read>
+    </article>
+</blog>
