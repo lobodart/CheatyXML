@@ -44,18 +44,18 @@ Let's take the following XML content for all of our examples :
 </blog>
 ```
 
-There are different ways to create an instance of XMLParser.
+There are different ways to create an instance of CXMLParser.
 ##### Using an URL
 ```swift
-let parser: XMLParser! = XMLParser(contentsOfURL: ...) // NSURL
+let parser: CXMLParser! = CXMLParser(contentsOfURL: ...) // NSURL
 ```
 ##### Using a string
 ```swift
-let parser: XMLParser! = XMLParser(string: ...) // String
+let parser: CXMLParser! = CXMLParser(string: ...) // String
 ```
 ##### Using data
 ```swift
-let parser: XMLParser! = XMLParser(data: ...) // NSData
+let parser: CXMLParser! = CXMLParser(data: ...) // NSData
 ```
 --
 ### Retrieving an element using tags
@@ -185,7 +185,7 @@ For more information about the optional/non-optional casting, please read the **
 Once uppon a time, it is very easy to get all the tag attributes.
 ##### >= 2.0.0
 ```swift
-let attributes = parser.rootElement.attributes // Will give you a [XMLAttribute]
+let attributes = parser.rootElement.attributes // Will give you a [CXMLAttribute]
 let dic = attributes.dictionary // Will give you a [String: String]
 ```
 ##### Earlier
