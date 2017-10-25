@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		480A684D1DC094DF00FA660C /* CXMLObjectProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480A684C1DC094DF00FA660C /* CXMLObjectProtocol.swift */; };
+		480A684F1DC0955600FA660C /* ArticleObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 480A684E1DC0955600FA660C /* ArticleObject.swift */; };
 		486D48811AB4A19D004F6258 /* CheatyXML.h in Headers */ = {isa = PBXBuildFile; fileRef = 486D48801AB4A19D004F6258 /* CheatyXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		486D48871AB4A19D004F6258 /* CheatyXML.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 486D487B1AB4A19D004F6258 /* CheatyXML.framework */; };
 		486D488E1AB4A19D004F6258 /* CheatyXMLTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486D488D1AB4A19D004F6258 /* CheatyXMLTests.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		480A684C1DC094DF00FA660C /* CXMLObjectProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CXMLObjectProtocol.swift; sourceTree = "<group>"; };
+		480A684E1DC0955600FA660C /* ArticleObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArticleObject.swift; sourceTree = "<group>"; };
 		486D487B1AB4A19D004F6258 /* CheatyXML.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CheatyXML.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		486D487F1AB4A19D004F6258 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		486D48801AB4A19D004F6258 /* CheatyXML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CheatyXML.h; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 				48B018DC1D3B643800E31BE4 /* CXMLAttribute.swift */,
 				48B018DE1D3B6E3500E31BE4 /* CXMLNullAttribute.swift */,
 				48B018D81D3B62CB00E31BE4 /* CXMLNullTag.swift */,
+				480A684C1DC094DF00FA660C /* CXMLObjectProtocol.swift */,
 				486D487E1AB4A19D004F6258 /* Supporting Files */,
 			);
 			path = CheatyXML;
@@ -113,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				486D488D1AB4A19D004F6258 /* CheatyXMLTests.swift */,
+				480A684E1DC0955600FA660C /* ArticleObject.swift */,
 				48CD10F51CCFEAD800A8CFAD /* Test.xml */,
 				4894F4EA1D3B5C6100BF093C /* TestFail.xml */,
 				486D488B1AB4A19D004F6258 /* Supporting Files */,
@@ -244,6 +250,7 @@
 			files = (
 				48B018D71D3B629D00E31BE4 /* CXMLTag.swift in Sources */,
 				48B018DF1D3B6E3500E31BE4 /* CXMLNullAttribute.swift in Sources */,
+				480A684D1DC094DF00FA660C /* CXMLObjectProtocol.swift in Sources */,
 				486D48981AB4A1AF004F6258 /* CXMLParser.swift in Sources */,
 				48B018DB1D3B636900E31BE4 /* CXMLElement.swift in Sources */,
 				48B018DD1D3B643800E31BE4 /* CXMLAttribute.swift in Sources */,
@@ -255,6 +262,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				480A684F1DC0955600FA660C /* ArticleObject.swift in Sources */,
 				486D488E1AB4A19D004F6258 /* CheatyXMLTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

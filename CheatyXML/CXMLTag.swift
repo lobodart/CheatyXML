@@ -92,6 +92,30 @@ open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
         return self._attributes[index]
     }
     
+    open func toObject<T: NSObject>() -> T where T: CXMLObjectProtocol {
+        let object: T = T()
+        for (xmlValue, classValue) in T.map() {
+            guard let value = self[xmlValue] else {
+                continue
+            }
+            
+            let castedValue: Any?
+            if let v = value.double {
+                castedValue = v
+            } else if let v = value.int {
+                castedValue = v
+            } else if let v = value.string {
+                castedValue = v
+            } else {
+                continue
+            }
+            
+            object.setValue(castedValue, forKey: classValue)
+        }
+        
+        return object
+    }
+    
     fileprivate final func arrayOfElementsNamed(_ tagName: String) -> [CXMLTag] {
         return self._subElements.filter({(element: CXMLTag) -> Bool in
             return element.tagName == tagName

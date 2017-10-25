@@ -115,4 +115,14 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(parser.rootElement.attribute("version").floatValue == 1.0)
         XCTAssert(parser.rootElement.attribute("creator").stringValue == "lobodart")
     }
+    
+    func testObjectMapping() {
+        let url: URL = URL(fileURLWithPath: self.filePath)
+        let parser: CXMLParser = CXMLParser(contentsOfURL: url)!
+        
+        for article in parser["article"].array {
+            let obj: ArticleObject = article.toObject()
+            print(obj.shortDescription)
+        }
+    }
 }
