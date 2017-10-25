@@ -140,7 +140,7 @@ open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
 
 public extension Sequence where Iterator.Element: CXMLAttribute {
     
-    public final var dictionary: [String: String] {
+    public var dictionary: [String: String] {
         get {
             return self.reduce([:], { (dict: [String: String], value: CXMLAttribute) -> [String: String] in
                 var newDict = dict
