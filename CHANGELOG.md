@@ -1,3 +1,15 @@
+## 2.2.0 (May 24, 2018)
+
+- Swift 4.1 Update
+- Removing minor warnings
+
+
+## 2.1.0 (October 25, 2017)
+
+- Swift 4.0 Update
+- Removing minor warnings
+
+
 ## 2.0.0 (September 19, 2016)
 
 - Swift 3 Update

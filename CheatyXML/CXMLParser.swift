@@ -54,7 +54,7 @@ public class CXMLParser: NSObject, XMLParserDelegate {
     
     deinit {
         for pointer in self._allocatedPointersList {
-            pointer.deallocate(capacity: 1)
+            pointer.deallocate()
         }
     }
     
@@ -105,7 +105,7 @@ public class CXMLParser: NSObject, XMLParserDelegate {
         tmpString! += string
         
         let regex: NSRegularExpression = try! NSRegularExpression(pattern: "[^\\n\\s]+", options: [])
-        if regex.matches(in: tmpString, options: [], range: NSMakeRange(0, tmpString.characters.count)).count <= 0 {
+        if regex.matches(in: tmpString, options: [], range: NSMakeRange(0, tmpString.count)).count <= 0 {
             tmpString = nil
         }
         
