@@ -59,23 +59,21 @@ class CheatyXMLTests: XCTestCase {
         let url: URL = URL(fileURLWithPath: self.filePath)
         let parser: CXMLParser = CXMLParser(contentsOfURL: url)!
         
-        let blogName: String! = parser["name"].stringValue
-        XCTAssert(blogName == "MyAwesomeBlog!")
+        XCTAssert(parser["name"].stringValue == "MyAwesomeBlog!")
+        XCTAssert(parser["namee"] is CXMLNullTag)
+        XCTAssert(parser["namee"].description == "CXMLNullTag")
         
-        let admin: String! = parser["users"]["admin"].stringValue
-        XCTAssert(admin == "lobodart")
+        XCTAssert(parser["users"]["admin"].stringValue == "lobodart")
         
-        let article: String! = parser["article"][0]["title"].stringValue
-        XCTAssert(article == "My first article")
+        XCTAssert(parser["article"][0]["title"].stringValue == "My first article")
+        XCTAssert(parser["article"][1]["title"].stringValue == "Another article")
         
-        let article2: String! = parser["article"][1]["title"].stringValue
-        XCTAssert(article2 == "Another article")
+        XCTAssert(parser["article", 0]["title"].stringValue == "My first article")
+        XCTAssert(parser["article", 1]["title"].stringValue == "Another article")
         
-        let articleOtherNotation: String! = parser["article", 0]["title"].stringValue
-        XCTAssert(articleOtherNotation == "My first article")
-        
-        let article2OtherNotation: String! = parser["article", 1]["title"].stringValue
-        XCTAssert(article2OtherNotation == "Another article")
+        XCTAssert(parser.rootElement.count == 1)
+        XCTAssert(parser["article"].count == 2)
+        XCTAssert(parser["article"].numberOfChildElements == 7)
     }
     
     func testTypeCasts() {
@@ -84,6 +82,7 @@ class CheatyXMLTests: XCTestCase {
         
         let articles = parser["article"].array
         XCTAssert(articles.count == 2)
+        XCTAssert(articles == parser.rootElement.elementsNamed("article"))
         
         let article = articles[0]
         
@@ -114,5 +113,6 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(parser.rootElement.attribute("version").doubleValue == 1.0)
         XCTAssert(parser.rootElement.attribute("version").floatValue == 1.0)
         XCTAssert(parser.rootElement.attribute("creator").stringValue == "lobodart")
+        XCTAssert(parser.rootElement.attribute("creatorr") is CXMLNullAttribute)
     }
 }
