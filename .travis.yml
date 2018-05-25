@@ -5,6 +5,9 @@ xcode_sdk: iphonesimulator11.3
 
 script: ./scripts/ci.sh
 
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}
+
 deploy:
   provider: script
   script: ./scripts/push.sh
