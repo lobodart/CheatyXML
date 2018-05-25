@@ -67,9 +67,15 @@ class CheatyXMLTests: XCTestCase {
         
         XCTAssert(parser["article"][0]["title"].stringValue == "My first article")
         XCTAssert(parser["article"][1]["title"].stringValue == "Another article")
+        XCTAssert(parser["article"][2] is CXMLNullTag)
         
         XCTAssert(parser["article", 0]["title"].stringValue == "My first article")
         XCTAssert(parser["article", 1]["title"].stringValue == "Another article")
+        XCTAssert(parser["article", 2] is CXMLNullTag)
+        
+        for article in parser.rootElement.elementsNamed("article") {
+            XCTAssert(article["title"].string != nil)
+        }
         
         XCTAssert(parser.rootElement.count == 1)
         XCTAssert(parser["article"].count == 2)
@@ -93,7 +99,6 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(article["date"].dateValue("yyyy-MM-dd HH:mm:ss") is Date)
         XCTAssert(article["title"].exists == true)
         
-        
         XCTAssert(article["foo"].string == nil)
         XCTAssert(article["bar"].int == nil)
         XCTAssert(article["john"].float == nil)
@@ -113,6 +118,8 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(parser.rootElement.attribute("version").doubleValue == 1.0)
         XCTAssert(parser.rootElement.attribute("version").floatValue == 1.0)
         XCTAssert(parser.rootElement.attribute("creator").stringValue == "lobodart")
+        XCTAssert(parser.rootElement.attribute("creator").description == "CXMLAttribute")
         XCTAssert(parser.rootElement.attribute("creatorr") is CXMLNullAttribute)
+        XCTAssert(parser.rootElement.attribute("creatorr").description == "CXMLNullAttribute")
     }
 }
