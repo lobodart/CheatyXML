@@ -59,23 +59,27 @@ class CheatyXMLTests: XCTestCase {
         let url: URL = URL(fileURLWithPath: self.filePath)
         let parser: CXMLParser = CXMLParser(contentsOfURL: url)!
         
-        let blogName: String! = parser["name"].stringValue
-        XCTAssert(blogName == "MyAwesomeBlog!")
+        XCTAssert(parser["name"].stringValue == "MyAwesomeBlog!")
+        XCTAssert(parser["namee"] is CXMLNullTag)
+        XCTAssert(parser["namee"].description == "CXMLNullTag")
         
-        let admin: String! = parser["users"]["admin"].stringValue
-        XCTAssert(admin == "lobodart")
+        XCTAssert(parser["users"]["admin"].stringValue == "lobodart")
         
-        let article: String! = parser["article"][0]["title"].stringValue
-        XCTAssert(article == "My first article")
+        XCTAssert(parser["article"][0]["title"].stringValue == "My first article")
+        XCTAssert(parser["article"][1]["title"].stringValue == "Another article")
+        XCTAssert(parser["article"][2] is CXMLNullTag)
         
-        let article2: String! = parser["article"][1]["title"].stringValue
-        XCTAssert(article2 == "Another article")
+        XCTAssert(parser["article", 0]["title"].stringValue == "My first article")
+        XCTAssert(parser["article", 1]["title"].stringValue == "Another article")
+        XCTAssert(parser["article", 2] is CXMLNullTag)
         
-        let articleOtherNotation: String! = parser["article", 0]["title"].stringValue
-        XCTAssert(articleOtherNotation == "My first article")
+        for article in parser.rootElement.elementsNamed("article") {
+            XCTAssert(article["title"].string != nil)
+        }
         
-        let article2OtherNotation: String! = parser["article", 1]["title"].stringValue
-        XCTAssert(article2OtherNotation == "Another article")
+        XCTAssert(parser.rootElement.count == 1)
+        XCTAssert(parser["article"].count == 2)
+        XCTAssert(parser["article"].numberOfChildElements == 7)
     }
     
     func testTypeCasts() {
@@ -84,6 +88,7 @@ class CheatyXMLTests: XCTestCase {
         
         let articles = parser["article"].array
         XCTAssert(articles.count == 2)
+        XCTAssert(articles == parser.rootElement.elementsNamed("article"))
         
         let article = articles[0]
         
@@ -93,7 +98,6 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(article["rate"].doubleValue == 4.3)
         XCTAssert(article["date"].dateValue("yyyy-MM-dd HH:mm:ss") is Date)
         XCTAssert(article["title"].exists == true)
-        
         
         XCTAssert(article["foo"].string == nil)
         XCTAssert(article["bar"].int == nil)
@@ -114,5 +118,8 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(parser.rootElement.attribute("version").doubleValue == 1.0)
         XCTAssert(parser.rootElement.attribute("version").floatValue == 1.0)
         XCTAssert(parser.rootElement.attribute("creator").stringValue == "lobodart")
+        XCTAssert(parser.rootElement.attribute("creator").description == "CXMLAttribute")
+        XCTAssert(parser.rootElement.attribute("creatorr") is CXMLNullAttribute)
+        XCTAssert(parser.rootElement.attribute("creatorr").description == "CXMLNullAttribute")
     }
 }
