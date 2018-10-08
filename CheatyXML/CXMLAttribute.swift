@@ -10,7 +10,7 @@ import Foundation
 
 open class CXMLAttribute: CXMLElement {
     
-    open let name: String!
+    public let name: String!
     
     init(name: String!, value: String?) {
         self.name = name

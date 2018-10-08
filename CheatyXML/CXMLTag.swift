@@ -11,7 +11,8 @@ import Foundation
 // MARK: - CXMLTag Class
 open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
     
-    open let tagName: String!
+    public let tagName: String!
+
     open var attributes: [CXMLAttribute] {
         get {
             return self._attributes
@@ -42,7 +43,7 @@ open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
     
     open override var debugDescription: String { get { return self.description } }
     open override var description: String {
-        return "CXMLTag <\(self.tagName)>, attributes(\(self.attributes.count)): \(self.attributes), children: \(self._subElements.count)"
+        return "CXMLTag <\(self.tagName ?? "???")>, attributes(\(self.attributes.count)): \(self.attributes), children: \(self._subElements.count)"
     }
     
     open var exists: Bool { get { return !(self is CXMLNullTag) } }
