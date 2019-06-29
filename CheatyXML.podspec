@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CheatyXML"
-  s.version      = "2.2.0"
+  s.version      = "3.0.0"
   s.summary      = "CheatyXML"
 
   s.description  = <<-DESC
@@ -66,7 +66,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/lobodart/CheatyXML.git", :tag => "v2.2.0" }
+  s.source       = { :git => "https://github.com/lobodart/CheatyXML.git", :tag => "v3.0.0" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
