@@ -11,7 +11,7 @@ import Foundation
 // MARK: - CXMLTag Class
 open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
     
-    open let tagName: String!
+    public let tagName: String!
     open var attributes: [CXMLAttribute] {
         get {
             return self._attributes
@@ -42,7 +42,7 @@ open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
     
     open override var debugDescription: String { get { return self.description } }
     open override var description: String {
-        return "CXMLTag <\(self.tagName)>, attributes(\(self.attributes.count)): \(self.attributes), children: \(self._subElements.count)"
+        return "CXMLTag <\(self.tagName ?? "???")>, attributes(\(self.attributes.count)): \(self.attributes), children: \(self._subElements.count)"
     }
     
     open var exists: Bool { get { return !(self is CXMLNullTag) } }
@@ -83,7 +83,7 @@ open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
     }
     
     open func attribute(_ name: String) -> CXMLAttribute {
-        guard let index = self._attributes.index(where: { (attribute) -> Bool in
+        guard let index = self._attributes.firstIndex(where: { (attribute) -> Bool in
             return attribute.name == name
         }) else {
             return CXMLNullAttribute()
@@ -140,7 +140,7 @@ open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
 
 public extension Sequence where Iterator.Element: CXMLAttribute {
     
-    public var dictionary: [String: String] {
+    var dictionary: [String: String] {
         get {
             return self.reduce([:], { (dict: [String: String], value: CXMLAttribute) -> [String: String] in
                 var newDict = dict
