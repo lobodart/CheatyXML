@@ -49,20 +49,6 @@ open class CXMLTag: CXMLElement, Sequence, IteratorProtocol {
     
     open var array: [CXMLTag] { get { return self._parentElement?.arrayOfElementsNamed(self.tagName) ?? self._subElements } }
     
-    open func date(_ format: String) -> Date? {
-        guard let content = self._content else {
-            return nil
-        }
-        
-        let dateFormat = DateFormatter()
-        dateFormat.dateFormat = format
-        return dateFormat.date(from: content)
-    }
-    
-    open func dateValue(_ format: String) -> Date {
-        return self.date(format)!
-    }
-    
     open func makeIterator() -> CXMLTag {
         self._generatorIndex = 0
         return self
