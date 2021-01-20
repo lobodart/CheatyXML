@@ -121,5 +121,11 @@ class CheatyXMLTests: XCTestCase {
         XCTAssert(parser.rootElement.attribute("creator").description == "CXMLAttribute")
         XCTAssert(parser.rootElement.attribute("creatorr") is CXMLNullAttribute)
         XCTAssert(parser.rootElement.attribute("creatorr").description == "CXMLNullAttribute")
+        
+        let firstArticle: CXMLTag = parser["article"].array[0]
+        XCTAssert(firstArticle.attribute("date").date("yyyy-MM-dd HH:mm:ss") != nil)
+        XCTAssert(firstArticle.attribute("date").date("yyyy-MM-dd") == nil) // invalid format
+        XCTAssert(firstArticle.attribute("failDate").date("yyyy-MM-dd HH:mm:ss") == nil)
+        XCTAssert(firstArticle.attribute("date").dateValue("yyyy-MM-dd HH:mm:ss") is Date)
     }
 }

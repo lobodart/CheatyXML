@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CheatyXML"
-  s.version      = "3.1.0"
+  s.version      = "3.1.1"
   s.summary      = "CheatyXML"
 
   s.description  = <<-DESC
@@ -49,7 +49,7 @@ Pod::Spec.new do |s|
   #
 
   s.author    = "Louis Bodart"
-  s.social_media_url   = "https://twitter.com/lobodart"
+  s.social_media_url   = "https://github.com/lobodart"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
