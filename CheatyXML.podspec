@@ -25,6 +25,8 @@ Pod::Spec.new do |s|
 
   s.homepage     = "https://github.com/lobodart/CheatyXML"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  
+  s.swift_version = "5.0"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
