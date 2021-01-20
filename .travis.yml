@@ -1,16 +1,18 @@
 language: swift
-
 osx_image: xcode10.2
 xcode_sdk: iphonesimulator12.2
 
-script: ./scripts/ci.sh
+stages:
+  - test
+  - name: deploy
+    if: (tag =~ ^v) AND (branch = master)
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}
+jobs:
+  include:
+    - stage: test
+      script: ./scripts/ci.sh
+      after_success: bash <(curl -s https://codecov.io/bash) -t ${CODECOV_TOKEN}
 
-deploy:
-  provider: script
-  script: ./scripts/push.sh
-  on:
-    branch: master
-    tags: true
+    - stage: deploy
+      before_script: ~/.rvm/scripts/rvm && rvm use default
+      script: pod trunk push
