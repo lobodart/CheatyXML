@@ -1,3 +1,7 @@
+## 3.1.1 (January 20, 2021)
+- Date typecasting is now available on attributes
+- Clean/improve repo files
+
 ## 3.1.0 (January 20, 2021)
 
 - Add tvOS support (9.0 or later)
