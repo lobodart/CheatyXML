@@ -1,6 +1,6 @@
 # CheatyXML
 
-[![CocoaPods](https://img.shields.io/cocoapods/v/CheatyXML.svg?maxAge=2592000)](https://cocoapods.org/pods/CheatyXML)
+[![CocoaPods](https://img.shields.io/cocoapods/v/CheatyXML.svg)](https://cocoapods.org/pods/CheatyXML)
 [![Build Status](https://travis-ci.org/lobodart/CheatyXML.svg?branch=master)](https://travis-ci.org/lobodart/CheatyXML)
 [![codecov](https://codecov.io/gh/lobodart/CheatyXML/branch/master/graph/badge.svg)](https://codecov.io/gh/lobodart/CheatyXML)
 
