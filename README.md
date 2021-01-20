@@ -6,6 +6,10 @@
 
 CheatyXML is a Swift framework designed to manage XML easily.
 
+## Requirements
+- iOS 8.0 or later
+- tvOS 9.0 or later
+
 ## Installation
 ### Cocoapods
 If you're using **cocoapods**, just add `pod 'CheatyXML'` into your `Podfile` file.
