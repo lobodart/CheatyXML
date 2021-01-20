@@ -49,7 +49,7 @@ Pod::Spec.new do |s|
   #
 
   s.author    = "Louis Bodart"
-  s.social_media_url   = "https://twitter.com/lobodart"
+  s.social_media_url   = "https://github.com/lobodart"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #

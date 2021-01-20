@@ -3,3 +3,4 @@
 set -e
 
 xcodebuild -project CheatyXML.xcodeproj -scheme "CheatyXML" -destination "platform=iOS Simulator,name=iPhone 6" build test
+exit $?
